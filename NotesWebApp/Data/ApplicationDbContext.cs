@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NotesWebApp.Models;
 
 namespace NotesWebApp.Data
 {
@@ -12,5 +13,6 @@ namespace NotesWebApp.Data
             : base(options)
         {
         }
+        public DbSet<NotesWebApp.Models.Note> Note { get; set; }
     }
 }
