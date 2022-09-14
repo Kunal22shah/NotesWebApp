@@ -1,4 +1,4 @@
-# NotesWebApp using C# and ASP.NET core. 
+# NotesWebApp using C# and ASP.NET core:
 
 - Using the MVC (Model View Controller) design pattern.
 - Configured database tables using the Entity framework.
