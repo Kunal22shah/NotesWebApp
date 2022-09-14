@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,16 @@ namespace NotesWebApp.Controllers
         {
             return View(await _context.Note.ToListAsync());
         }
+        // GET: Notes/ShowSearchForm
+        public async Task<IActionResult> ShowSearchForm()
+        {
+            return View();
+        }
+        // Post: Notes/ShowSearchResults
+        public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
+        {
+            return View("Index", await _context.Note.Where( j => j.NoteHeading.Contains(SearchPhrase)).ToListAsync());
+        }
 
         // GET: Notes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -44,6 +55,7 @@ namespace NotesWebApp.Controllers
         }
 
         // GET: Notes/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -52,6 +64,7 @@ namespace NotesWebApp.Controllers
         // POST: Notes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NoteHeading,NoteContent")] Note note)
@@ -66,6 +79,7 @@ namespace NotesWebApp.Controllers
         }
 
         // GET: Notes/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,6 +98,7 @@ namespace NotesWebApp.Controllers
         // POST: Notes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NoteHeading,NoteContent")] Note note)
@@ -117,6 +132,7 @@ namespace NotesWebApp.Controllers
         }
 
         // GET: Notes/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +151,7 @@ namespace NotesWebApp.Controllers
         }
 
         // POST: Notes/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
